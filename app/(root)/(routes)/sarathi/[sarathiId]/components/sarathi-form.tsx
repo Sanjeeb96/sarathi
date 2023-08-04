@@ -8,8 +8,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Wand2 } from "lucide-react";
 
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import { ImageUpload } from "@/components/image-upload";
+import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -60,14 +70,75 @@ export const SarathiForm = ({ initialData, categories }: SarathiFormProps) => {
     <div className="h-full p-4 space-y-2 max-w-3xl mx-auto">
       <Form {...form}>
         <form>
-          <div className="space-y-2 w-full col-span-2">
+          <div className="space-y-2 w-full">
             <div>
               <h3 className="text-lg font-medium">General Information</h3>
               <p className="text-sm text-muted-foreground">
                 General information about your Companion
               </p>
             </div>
+
             <Separator className="bg-primary/10" />
+          </div>
+
+          <FormField
+            name="src"
+            render={({ field }) => (
+              <FormItem className="flex flex-col items-center justify-center space-y-4 ">
+                {/* Image Upload */}
+                <FormControl>
+                  <ImageUpload
+                    disabled={isLoading}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+              name="name"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="col-span-2 md:col-span-1">
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isLoading}
+                      placeholder="Elon Musk"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This is how your AI Companion will be named.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="description"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isLoading}
+                      placeholder="CEO & Founder of Tesla, SpaceX"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Short description for your AI Companion
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         </form>
       </Form>
