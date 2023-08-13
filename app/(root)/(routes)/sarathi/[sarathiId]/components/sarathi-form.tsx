@@ -108,12 +108,12 @@ export const SarathiForm = ({ initialData, categories }: SarathiFormProps) => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      placeholder="Elon Musk"
+                      placeholder="/Narendra Modi"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    This is how your AI Companion will be named.
+                    This is how your AI Sarathi will be named.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -128,12 +128,12 @@ export const SarathiForm = ({ initialData, categories }: SarathiFormProps) => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      placeholder="CEO & Founder of Tesla, SpaceX"
+                      placeholder="PM of India."
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Short description for your AI Companion
+                    Short description for your AI Sarathi.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
