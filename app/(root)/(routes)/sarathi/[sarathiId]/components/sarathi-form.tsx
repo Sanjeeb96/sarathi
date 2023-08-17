@@ -162,7 +162,7 @@ export const SarathiForm = ({ initialData, categories }: SarathiFormProps) => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      placeholder="/Narendra Modi"
+                      placeholder="Narendra Modi"
                       {...field}
                     />
                   </FormControl>
