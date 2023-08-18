@@ -1,8 +1,10 @@
 import { Sarathi } from "@prisma/client";
+
 import Image from "next/image";
-import { Card, CardFooter, CardHeader } from "./ui/card";
 import Link from "next/link";
 import { MessageSquare } from "lucide-react";
+
+import { Card, CardFooter, CardHeader } from "./ui/card";
 
 interface SarathiProps {
   data: (Sarathi & {

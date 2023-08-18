@@ -1,4 +1,6 @@
 import prismadb from "@/lib/prismadb";
+import { auth, redirectToSignIn } from "@clerk/nextjs";
+
 import { SarathiForm } from "./components/sarathi-form";
 
 interface SarathiIdPageProps {
@@ -8,7 +10,12 @@ interface SarathiIdPageProps {
 }
 
 const SarathiIdPage = async ({ params }: SarathiIdPageProps) => {
+  const { userId } = auth();
   //TODO Check Subscription
+
+  if (!userId) {
+    return redirectToSignIn();
+  }
 
   const sarathi = await prismadb.sarathi.findUnique({
     where: {
