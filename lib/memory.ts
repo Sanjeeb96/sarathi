@@ -3,8 +3,8 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 
-export type CompanionKey = {
-  companionName: string;
+export type SarathiKey = {
+  sarathiName: string;
   modelName: string;
   userId: string;
 };
@@ -30,7 +30,7 @@ export class MemoryManager {
 
   public async vectorSearch(
     recentChatHistory: string,
-    companionFileName: string
+    sarathiFileName: string
   ) {
     const pineconeClient = <PineconeClient>this.vectorDBClient;
 
@@ -44,7 +44,7 @@ export class MemoryManager {
     );
 
     const similarDocs = await vectorStore
-      .similaritySearch(recentChatHistory, 3, { fileName: companionFileName })
+      .similaritySearch(recentChatHistory, 3, { fileName: sarathiFileName })
       .catch((err) => {
         console.log("WARNING: failed to get vector search results.", err);
       });
@@ -59,17 +59,17 @@ export class MemoryManager {
     return MemoryManager.instance;
   }
 
-  private generateRedisCompanionKey(companionKey: CompanionKey): string {
-    return `${companionKey.companionName}-${companionKey.modelName}-${companionKey.userId}`;
+  private generateRedisSarathiKey(sarathiKey: SarathiKey): string {
+    return `${sarathiKey.sarathiName}-${sarathiKey.modelName}-${sarathiKey.userId}`;
   }
 
-  public async writeToHistory(text: string, companionKey: CompanionKey) {
-    if (!companionKey || typeof companionKey.userId == "undefined") {
-      console.log("Companion key set incorrectly");
+  public async writeToHistory(text: string, sarathiKey: SarathiKey) {
+    if (!sarathiKey || typeof sarathiKey.userId == "undefined") {
+      console.log("Sarathi key set incorrectly");
       return "";
     }
 
-    const key = this.generateRedisCompanionKey(companionKey);
+    const key = this.generateRedisSarathiKey(sarathiKey);
     const result = await this.history.zadd(key, {
       score: Date.now(),
       member: text,
@@ -78,13 +78,13 @@ export class MemoryManager {
     return result;
   }
 
-  public async readLatestHistory(companionKey: CompanionKey): Promise<string> {
-    if (!companionKey || typeof companionKey.userId == "undefined") {
-      console.log("Companion key set incorrectly");
+  public async readLatestHistory(sarathiKey: SarathiKey): Promise<string> {
+    if (!sarathiKey || typeof sarathiKey.userId == "undefined") {
+      console.log("Sarathi key set incorrectly");
       return "";
     }
 
-    const key = this.generateRedisCompanionKey(companionKey);
+    const key = this.generateRedisSarathiKey(sarathiKey);
     let result = await this.history.zrange(key, 0, Date.now(), {
       byScore: true,
     });
@@ -97,9 +97,9 @@ export class MemoryManager {
   public async seedChatHistory(
     seedContent: String,
     delimiter: string = "\n",
-    companionKey: CompanionKey
+    sarathiKey: SarathiKey
   ) {
-    const key = this.generateRedisCompanionKey(companionKey);
+    const key = this.generateRedisSarathiKey(sarathiKey);
     if (await this.history.exists(key)) {
       console.log("User already has chat history");
       return;
