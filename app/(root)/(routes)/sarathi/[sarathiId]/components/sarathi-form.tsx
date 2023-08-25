@@ -162,7 +162,7 @@ export const SarathiForm = ({ initialData, categories }: SarathiFormProps) => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      placeholder="Narendra Modi"
+                      placeholder="Elon Musk"
                       {...field}
                     />
                   </FormControl>
@@ -182,7 +182,7 @@ export const SarathiForm = ({ initialData, categories }: SarathiFormProps) => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      placeholder="PM of India."
+                      placeholder="CEO of Tesla & X"
                       {...field}
                     />
                   </FormControl>
@@ -290,7 +290,7 @@ export const SarathiForm = ({ initialData, categories }: SarathiFormProps) => {
 
           <div className="w-full flex justify-center">
             <Button size="lg" disabled={isLoading}>
-              {initialData ? "Edit your companion" : "Create your companion"}
+              {initialData ? "Edit your sarathi" : "Create your sarathi"}
               <Wand2 className="w-4 h-4 ml-2" />
             </Button>
           </div>
